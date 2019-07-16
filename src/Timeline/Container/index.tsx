@@ -22,7 +22,7 @@ const Container = ({
         }`}
       >
         <div className="arrowr" />
-        <div className="w-2/5 rounded-lg bg-white text-left p-4 leading-normal">
+        <div className="w-2/5 rounded-lg bg-white text-left p-4 leading-normal content">
           <h2 className="font-bold text-xl">{name}</h2>
           <p className="text-base">{description}</p>
           <div

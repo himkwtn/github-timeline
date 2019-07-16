@@ -1,18 +1,12 @@
 import React from 'react'
-
+import './Container.scss'
 const TimelineCircle = () => {
   return (
     <div
+      className="timeline-circle rounded-full absolute h-12 w-12 z-10"
       style={{
-        content: ' ',
-        position: 'absolute',
-        left: '50%',
         transform: 'translateX(-50%)',
-        height: '40px',
-        width: '40px',
-        backgroundColor: 'rgb(207, 206, 206)',
-        borderRadius: '50%',
-        zIndex: 9
+        backgroundColor: 'rgb(207, 206, 206)'
       }}
     />
   )

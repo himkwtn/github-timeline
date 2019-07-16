@@ -10,6 +10,10 @@ h2 {
   z-index: 1;
   border: medium solid white;
 }
+
+.timeline-circle {
+  left: 50%;
+}
 .repo-list {
   list-style-type: none;
   display: flex;
@@ -26,7 +30,7 @@ h2 {
       border-color: transparent white transparent transparent;
     }
     .show {
-      animation: slideFromRight 0.5s;
+      animation: slideFromRight 1s;
     }
   }
 
@@ -40,7 +44,7 @@ h2 {
       border-color: transparent transparent transparent white;
     }
     .show {
-      animation: slideFromLeft 0.5s;
+      animation: slideFromLeft 1s;
     }
   }
 }
@@ -66,5 +70,45 @@ h2 {
   100% {
     opacity: 1;
     transform: translateX(0px);
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .timeline-circle {
+    left: 31px;
+  }
+  .content {
+    width: 100%;
+  }
+  .repo-list {
+    list-style-type: none;
+    display: flex;
+    align-content: flex-start;
+    padding: 20px 20px;
+    &:nth-child(even),
+    &:nth-child(odd) {
+      div {
+        justify-content: flex-end;
+      }
+      .arrowr {
+        content: ' ';
+        height: 0;
+        position: relative;
+        top: 10px;
+        width: 0;
+        z-index: 1;
+        border: medium solid white;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent white transparent transparent;
+      }
+
+      .arrowl {
+        content: '';
+        border-width: 0 0 0 0;
+      }
+      .show {
+        animation: slideFromRight 1s;
+      }
+    }
   }
 }
