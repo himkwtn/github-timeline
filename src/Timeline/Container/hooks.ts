@@ -6,14 +6,12 @@ export const useIntersect = (node: Element | null) => {
   const observeOut = useRef<IntersectionObserver>()
   useEffect(() => {
     observeIn.current = new IntersectionObserver(
-      entries => {
-        const element = entries[0]
+      ([element]) => {
         if (!visible && element.isIntersecting) setVisible(true)
       },
       { threshold: 0.6 }
     )
-    observeOut.current = new IntersectionObserver(entries => {
-      const element = entries[0]
+    observeOut.current = new IntersectionObserver(([element]) => {
       if (visible && !element.isIntersecting) setVisible(false)
     })
     if (node) {
@@ -21,8 +19,8 @@ export const useIntersect = (node: Element | null) => {
       observeOut.current.observe(node)
     }
     return () => {
-      observeIn.current && observeIn.current.disconnect()
-      observeOut.current && observeOut.current.disconnect()
+      observeIn!.current!.disconnect()
+      observeOut!.current!.disconnect()
     }
   })
   return visible

@@ -1,14 +1,12 @@
 import React from 'react'
 import 'normalize.css'
 import 'devicon'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Timeline from './Timeline'
+import './App.css'
 const App: React.FC = () => {
   return (
     <div>
-      <Router>
-        <Route path="/timeline" component={Timeline} />
-      </Router>
+      <Timeline />
     </div>
   )
 }

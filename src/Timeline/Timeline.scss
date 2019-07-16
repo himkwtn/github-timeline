@@ -8,16 +8,13 @@
 ul {
   padding: 0px;
 }
-/* The actual timeline (the vertical ruler) */
 .timeline {
-  /* background-color: lightslategrey; */
   position: relative;
-  /* max-width: 1200px; */
   margin: 0 auto;
   padding: 5% 10% 5% 10%;
+  min-height: 100vh;
 }
 
-/* The actual timeline (the vertical ruler) */
 .timeline::after {
   content: '';
   position: absolute;
@@ -30,9 +27,7 @@ ul {
   margin-left: -2px;
 }
 
-/* Media queries - Responsive timeline on screens less than 600px wide */
 @media screen and (max-width: 600px) {
-  /* Place the timeline to the left */
   .timeline::after {
     left: 31px;
   }

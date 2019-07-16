@@ -10,7 +10,7 @@ h2 {
   z-index: 1;
   border: medium solid white;
 }
-li {
+.repo-list {
   list-style-type: none;
   display: flex;
   align-content: flex-start;
@@ -26,7 +26,7 @@ li {
       border-color: transparent white transparent transparent;
     }
     .show {
-      animation: slideFromRight 1s;
+      animation: slideFromRight 0.5s;
     }
   }
 
@@ -40,23 +40,9 @@ li {
       border-color: transparent transparent transparent white;
     }
     .show {
-      animation: slideFromLeft 1s;
+      animation: slideFromLeft 0.5s;
     }
   }
-}
-
-.content {
-  background-color: white;
-  border-radius: 6px;
-  margin: 0px;
-  text-align: left;
-  padding: 20px 30px;
-}
-
-.container {
-  position: relative;
-  background-color: inherit;
-  width: 45%;
 }
 
 @keyframes slideFromRight {

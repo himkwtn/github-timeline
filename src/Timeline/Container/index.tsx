@@ -1,46 +1,40 @@
 import React, { useState } from 'react'
-import { Repository } from '../types'
+import { GithubRepository } from '../types'
 import './Container.scss'
 import TimelineCircle from './TimelineCircle'
 import Language from './Language'
-import styled from 'styled-components'
 import { useIntersect } from './hooks'
+import { parseDate } from './functions'
 
-const Wrapper = styled.div<{ visible: boolean }>`
-  display: flex;
-  flex-grow: 1;
-  visibility: ${p => (p.visible ? 'visible' : 'hidden')};
-`
-
-const Footer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-`
 const Container = ({
   name,
   language,
   description,
   publishedDate
-}: Repository) => {
+}: GithubRepository) => {
   const [ref, setRef] = useState<Element | null>(null)
   const visible = useIntersect(ref)
   return (
-    <li ref={el => setRef(el)}>
-      <Wrapper visible={visible} className={visible ? 'show' : ''}>
+    <li ref={el => setRef(el)} className="repo-list">
+      <div
+        className={`flex flex-grow justify-center ${visible ? 'show' : ''} ${
+          visible ? 'visible' : 'invisible'
+        }`}
+      >
         <div className="arrowr" />
-        <div className="container">
-          <div className="content">
-            <h2>{name}</h2>
-            <p>{description}</p>
-            <Footer>
-              <Language language={language} />
-              <span>{publishedDate}</span>
-            </Footer>
+        <div className="w-2/5 rounded-lg bg-white text-left p-4 leading-normal">
+          <h2 className="font-bold text-xl">{name}</h2>
+          <p className="text-base">{description}</p>
+          <div
+            className="flex items-center text-sm"
+            style={{ justifyContent: 'space-between' }}
+          >
+            <Language language={language} />
+            <span>{parseDate(publishedDate)}</span>
           </div>
         </div>
         <div className="arrowl" />
-      </Wrapper>
+      </div>
       <TimelineCircle />
     </li>
   )
