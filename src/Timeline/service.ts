@@ -1,17 +1,24 @@
 import { GithubRepository, GithubProfile } from './types'
 import axios from 'axios'
-export const getRepo = async (
-  username: string
-): Promise<GithubRepository[]> => {
-  const { data } = await axios.get<GithubRepository[]>(
-    `http://localhost:8083/repo/${username}`
-  )
-  return data
+import { BehaviorSubject } from 'rxjs'
+
+class Service {
+  $profile = new BehaviorSubject<GithubProfile | undefined>(undefined)
+  $repos = new BehaviorSubject<GithubRepository[]>([])
+
+  $fetchProfile = async (username: string) => {
+    const { data } = await axios.get<GithubProfile>(
+      `http://localhost:8083/user/${username}`
+    )
+    this.$profile.next(data)
+  }
+
+  $fetchRepos = async (username: string) => {
+    const { data } = await axios.get<GithubRepository[]>(
+      `http://localhost:8083/repo/${username}`
+    )
+    return this.$repos.next(data)
+  }
 }
 
-export const getProfile = async (username: string): Promise<GithubProfile> => {
-  const { data } = await axios.get<GithubProfile>(
-    `http://localhost:8083/user/${username}`
-  )
-  return data
-}
+export const service = new Service()

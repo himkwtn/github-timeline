@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './Timeline.scss'
-import { getRepo, getProfile } from './service'
+import { service } from './service'
 import { GithubRepository, GithubProfile } from './types'
 import Container from './Container'
 import Profile from './Profile'
@@ -8,8 +8,16 @@ const Timeline = () => {
   const [repos, setRepos] = useState<GithubRepository[]>([])
   const [profile, setProfile] = useState<GithubProfile>()
   useEffect(() => {
-    getRepo('himkwtn').then(setRepos)
-    getProfile('himkwtn').then(setProfile)
+    const profileSubscription = service.$profile.subscribe(setProfile)
+    const reposSubscription = service.$repos.subscribe(setRepos)
+
+    service.$fetchProfile('himkwtn')
+    service.$fetchRepos('himkwtn')
+
+    return () => {
+      profileSubscription.unsubscribe()
+      reposSubscription.unsubscribe()
+    }
   }, [])
   return (
     <div className="bg">
