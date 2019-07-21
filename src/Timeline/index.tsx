@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import './Timeline.scss'
-import { getRepo, getProfile } from './service'
-import { GithubRepository, GithubProfile } from './types'
+import { service } from './service'
 import Container from './Container'
 import Profile from './Profile'
+import { useObservable } from '../utils/hooks'
 const Timeline = () => {
-  const [repos, setRepos] = useState<GithubRepository[]>([])
-  const [profile, setProfile] = useState<GithubProfile>()
+  const repos = useObservable(service.repos$, [])
+  const profile = useObservable(service.profile$)
   useEffect(() => {
-    getRepo('himkwtn').then(setRepos)
-    getProfile('himkwtn').then(setProfile)
+    service.fetchProfile('himkwtn')
+    service.fetchRepos('himkwtn')
   }, [])
   return (
     <div className="bg">

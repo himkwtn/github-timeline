@@ -1,7 +1,7 @@
 import React from 'react'
 import Img from 'react-image'
 import { GithubProfile } from '../types'
-
+import { MdSearch } from 'react-icons/md'
 const Profile = (props: GithubProfile) => {
   const { username, avatar, url, name, bio, orgs } = props
   return (
@@ -14,6 +14,7 @@ const Profile = (props: GithubProfile) => {
         {orgs.map(({ avatar, url }, i) => (
           <Img src={avatar} className="w-8 h-8" key={i} />
         ))}
+        <MdSearch />
       </div>
     </div>
   )
