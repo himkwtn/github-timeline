@@ -8,10 +8,12 @@ const Profile = (props: GithubProfile) => {
       <a href={url} target="_blank" rel="noopener noreferrer">
         <Img src={avatar} className="rounded-lg w-20 h-20 mr-5" />
       </a>
-      <div className="text-left">
-        <span className="font-bold text-xl mr-4">{name}</span>
+      <div className="text-left break-words">
         <a href={url} target="_blank" rel="noopener noreferrer">
-          <span className="text-lg text-indigo-600 ">(@{username})</span>
+          <p className="font-bold text-xl mr-4">
+            {name}
+            <span className="text-lg text-indigo-600 "> (@{username})</span>
+          </p>
         </a>
 
         <p>{bio}</p>
