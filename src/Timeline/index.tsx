@@ -1,19 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Timeline.scss'
 import { service } from './service'
 import Container from './Container'
 import Profile from './Profile'
-import { useObservable } from '../utils/hooks'
+import { GithubProfile, GithubRepository } from './types'
+import Header from './Header'
+import SearchBar from './SearchBar'
 const Timeline = () => {
-  const repos = useObservable(service.repos$, [])
-  const profile = useObservable(service.profile$)
+  const [profile, setProfile] = useState<GithubProfile>()
+  const [repos, setRepos] = useState<GithubRepository[]>([])
   useEffect(() => {
-    service.fetchProfile('himkwtn')
-    service.fetchRepos('himkwtn')
+    const subscription = service.data$.subscribe(({ profile, repos }) => {
+      setProfile(profile)
+      setRepos(repos)
+    })
+    return () => subscription.unsubscribe()
   }, [])
   return (
     <div className="bg">
-      {profile && <Profile {...profile} />}
+      <Header>
+        <SearchBar />
+        {profile && <Profile {...profile} />}
+      </Header>
 
       <div className="timeline">
         <ul>

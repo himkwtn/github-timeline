@@ -17,3 +17,8 @@ export interface GithubProfile {
   bio: string
   orgs: Organization[]
 }
+
+export interface SearchResult {
+  username: string
+  avatar: string
+}

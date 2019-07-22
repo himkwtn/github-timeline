@@ -1,24 +1,51 @@
-import { GithubRepository, GithubProfile } from './types'
-import axios from 'axios'
-import { BehaviorSubject } from 'rxjs'
+import { GithubRepository, GithubProfile, SearchResult } from './types'
+import axios, { AxiosResponse } from 'axios'
+import { BehaviorSubject, from, forkJoin, Observable } from 'rxjs'
+import { flatMap, map, filter, debounceTime, switchMap } from 'rxjs/operators'
+import { BASE_URL } from '../config'
 
+const extractData = <T>(result: Observable<AxiosResponse<T>>) =>
+  map<AxiosResponse<T>, T>(({ data }) => data)(result)
 class Service {
-  profile$ = new BehaviorSubject<GithubProfile | undefined>(undefined)
-  repos$ = new BehaviorSubject<GithubRepository[]>([])
-
-  fetchProfile = async (username: string) => {
-    const { data } = await axios.get<GithubProfile>(
-      `http://localhost:8083/user/${username}`
+  private searchUser = (input: string) =>
+    from(axios.get<SearchResult[]>(`${BASE_URL}/search/${input}`)).pipe(
+      extractData
     )
-    this.profile$.next(data)
+
+  searchInput$ = new BehaviorSubject('')
+
+  searchResult$ = this.searchInput$.pipe(
+    debounceTime(200),
+    filter(input => input.length > 2),
+    switchMap(this.searchUser)
+  )
+
+  private fetchProfile = (username: string) =>
+    from(axios.get<GithubProfile>(`${BASE_URL}/user/${username}`)).pipe(
+      extractData
+    )
+
+  private fetchRepos = (username: string) =>
+    from(axios.get<GithubRepository[]>(`${BASE_URL}/repo/${username}`)).pipe(
+      extractData
+    )
+
+  private username$ = new BehaviorSubject('')
+
+  fetchData = (username: string) => {
+    this.username$.next(username)
+    this.searchInput$.next('')
   }
 
-  fetchRepos = async (username: string) => {
-    const { data } = await axios.get<GithubRepository[]>(
-      `http://localhost:8083/repo/${username}`
+  data$ = this.username$.pipe(
+    filter(username => username !== ''),
+    flatMap(username =>
+      forkJoin({
+        profile: this.fetchProfile(username),
+        repos: this.fetchRepos(username)
+      })
     )
-    this.repos$.next(data)
-  }
+  )
 }
 
 export const service = new Service()
