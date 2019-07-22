@@ -5,15 +5,21 @@ const Profile = (props: GithubProfile) => {
   const { username, avatar, url, name, bio, orgs } = props
   return (
     <div className="flex flex-row">
-      <Img src={avatar} className="rounded-lg w-20 h-20 mr-5" />
+      <a href={url} target="_blank" rel="noopener noreferrer">
+        <Img src={avatar} className="rounded-lg w-20 h-20 mr-5" />
+      </a>
       <div className="text-left">
         <span className="font-bold text-xl mr-4">{name}</span>
-        <span className="text-lg">({username})</span>
+        <a href={url} target="_blank" rel="noopener noreferrer">
+          <span className="text-lg text-indigo-600 ">(@{username})</span>
+        </a>
 
         <p>{bio}</p>
         <div className="flex flex-row">
           {orgs.map(({ avatar, url }, i) => (
-            <Img src={avatar} className="w-8 h-8" key={i} />
+            <a href={url} target="_blank" rel="noopener noreferrer">
+              <Img src={avatar} className="w-8 h-8" key={i} />
+            </a>
           ))}
         </div>
       </div>

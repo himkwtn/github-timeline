@@ -10,7 +10,8 @@ const Container = ({
   name,
   language,
   description,
-  publishedDate
+  publishedDate,
+  url
 }: GithubRepository) => {
   const [ref, setRef] = useState<Element | null>(null)
   const visible = useIntersect(ref)
@@ -22,8 +23,10 @@ const Container = ({
         }`}
       >
         <div className="arrowr" />
-        <div className="w-2/5 rounded-lg bg-white text-left p-4 leading-normal content">
-          <h2 className="font-bold text-xl">{name}</h2>
+        <div className="w-2/5 rounded-lg bg-white text-left p-4 leading-normal content break-words">
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            <h2 className="font-bold text-xl">{name}</h2>
+          </a>
           <p className="text-base">{description}</p>
           <div
             className="flex items-center text-sm"

@@ -34,7 +34,9 @@ const SearchBar = () => {
           <MdSearch />
         </IconContext.Provider>
       </div>
-      <ul>{result && result.map(i => <Result {...i} key={i.avatar} />)}</ul>
+      <div className="flex flex-wrap justify-around">
+        {result && result.map(i => <Result {...i} key={i.avatar} />)}
+      </div>
     </div>
   )
 }
