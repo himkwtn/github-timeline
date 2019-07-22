@@ -9,7 +9,9 @@ export const ICON: Constant = Object.freeze({
   TypeScript: 'typescript',
   Java: 'java',
   'C++': 'cplusplus',
-  Python: 'python'
+  Python: 'python',
+  Go: 'go',
+  PHP: 'php'
 })
 
 export const COLOR: Constant = Object.freeze({

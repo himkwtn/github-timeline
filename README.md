@@ -7,4 +7,5 @@
 - React
 - Typescript
 - RxJs
+- Tailwind
 - [Github API](https://github.com/himkwtn/github-app)
