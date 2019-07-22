@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { GithubRepository } from '../types'
+import { GithubRepository } from '../../common/types'
 import './Container.scss'
 import TimelineCircle from './TimelineCircle'
 import Language from './Language'

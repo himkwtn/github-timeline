@@ -1,7 +1,7 @@
 import React from 'react'
-import { SearchResult } from '../types'
 import Img from 'react-image'
-import { service } from '../service'
+import { service } from '../../common/service'
+import { SearchResult } from '../../common/types'
 
 const Result = ({ username, avatar }: SearchResult) => {
   const handleClick = () => {

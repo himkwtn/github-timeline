@@ -1,8 +1,8 @@
 import React, { useState, useEffect, ChangeEvent } from 'react'
 import { MdSearch } from 'react-icons/md'
 import { IconContext } from 'react-icons'
-import { service } from '../service'
-import { SearchResult } from '../types'
+import { service } from '../../common/service'
+import { SearchResult } from '../../common/types'
 import Result from './Result'
 
 const SearchBar = () => {

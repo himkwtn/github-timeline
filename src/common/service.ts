@@ -1,6 +1,6 @@
 import { GithubRepository, GithubProfile, SearchResult } from './types'
 import axios, { AxiosResponse } from 'axios'
-import { BehaviorSubject, from, forkJoin, Observable } from 'rxjs'
+import { BehaviorSubject, from, forkJoin, Observable, of } from 'rxjs'
 import { flatMap, map, filter, debounceTime, switchMap } from 'rxjs/operators'
 import { BASE_URL } from '../config'
 
@@ -8,15 +8,16 @@ const extractData = <T>(result: Observable<AxiosResponse<T>>) =>
   map<AxiosResponse<T>, T>(({ data }) => data)(result)
 class Service {
   private searchUser = (input: string) =>
-    from(axios.get<SearchResult[]>(`${BASE_URL}/search/${input}`)).pipe(
-      extractData
-    )
+    input.length > 2
+      ? from(axios.get<SearchResult[]>(`${BASE_URL}/search/${input}`)).pipe(
+          extractData
+        )
+      : of<SearchResult[]>([])
 
   searchInput$ = new BehaviorSubject('')
 
   searchResult$ = this.searchInput$.pipe(
     debounceTime(200),
-    filter(input => input.length > 2),
     switchMap(this.searchUser)
   )
 

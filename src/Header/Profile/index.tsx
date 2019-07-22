@@ -1,6 +1,6 @@
 import React from 'react'
 import Img from 'react-image'
-import { GithubProfile } from '../types'
+import { GithubProfile } from '../../common/types'
 const Profile = (props: GithubProfile) => {
   const { username, avatar, url, name, bio, orgs } = props
   return (
