@@ -5,7 +5,7 @@ const Profile = (props: GithubProfile) => {
   const { username, avatar, url, name, bio, orgs } = props
   return (
     <div className="flex flex-row">
-      <a href={url} target="_blank" rel="noopener noreferrer">
+      <a className="flex-shrink-0" href={url} target="_blank" rel="noopener noreferrer">
         <Img src={avatar} className="rounded-lg w-20 h-20 mr-5" />
       </a>
       <div className="text-left break-words">
