@@ -6,7 +6,7 @@ import './App.css'
 import Header from './Header'
 const App: React.FC = () => {
   return (
-    <div>
+    <div className="cursor-auto">
       <Header />
       <Timeline />
     </div>

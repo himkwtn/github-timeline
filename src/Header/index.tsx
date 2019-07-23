@@ -3,6 +3,7 @@ import { GithubProfile } from '../common/types'
 import { service } from '../common/service'
 import SearchBar from './SearchBar'
 import Profile from './Profile'
+import SearchResultList from './SearchResultList'
 
 const Header = () => {
   const [profile, setProfile] = useState<GithubProfile>()
@@ -13,9 +14,12 @@ const Header = () => {
     return () => subscription.unsubscribe()
   }, [])
   return (
-    <div className="flex h-auto container mx-auto w-auto p-6 bg-white items-start rounded-b-lg flex-col">
-      <SearchBar />
-      {profile && <Profile {...profile} />}
+    <div>
+      <SearchResultList />
+      <div className="flex h-auto container mx-auto w-auto p-6 bg-white items-start rounded-b-lg flex-col">
+        <SearchBar />
+        {profile && <Profile {...profile} />}
+      </div>
     </div>
   )
 }
