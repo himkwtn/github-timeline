@@ -1,18 +1,14 @@
 import { GithubRepository, GithubProfile, SearchResult } from './types'
-import axios, { AxiosResponse } from 'axios'
-import { BehaviorSubject, from, forkJoin, Observable, of } from 'rxjs'
-import { flatMap, map, filter, debounceTime, switchMap } from 'rxjs/operators'
+import axios from 'axios'
+import { BehaviorSubject, from, of, merge } from 'rxjs'
+import { filter, debounceTime, switchMap, pluck } from 'rxjs/operators'
 import { BASE_URL } from '../config'
 
-const extractData = <T>(result: Observable<AxiosResponse<T>>) =>
-  map<AxiosResponse<T>, T>(({ data }) => data)(result)
+const getRequest = <T>(url: string) =>
+  from(axios.get<T>(`${BASE_URL}/${url}`)).pipe(pluck('data'))
 class Service {
   private searchUser = (input: string) =>
-    input.length > 2
-      ? from(axios.get<SearchResult[]>(`${BASE_URL}/search/${input}`)).pipe(
-          extractData
-        )
-      : of<SearchResult[]>([])
+    input.length > 2 ? getRequest<SearchResult[]>(`/search/${input}`) : of([])
 
   searchInput$ = new BehaviorSubject('')
 
@@ -22,13 +18,12 @@ class Service {
   )
 
   private fetchProfile = (username: string) =>
-    from(axios.get<GithubProfile>(`${BASE_URL}/user/${username}`)).pipe(
-      extractData
-    )
+    merge(of(undefined), getRequest<GithubProfile>(`/user/${username}`))
 
   private fetchRepos = (username: string) =>
-    from(axios.get<GithubRepository[]>(`${BASE_URL}/repo/${username}`)).pipe(
-      extractData
+    merge(
+      of<GithubRepository[]>([]),
+      getRequest<GithubRepository[]>(`/repo/${username}`)
     )
 
   private username$ = new BehaviorSubject('')
@@ -38,14 +33,14 @@ class Service {
     this.searchInput$.next('')
   }
 
-  data$ = this.username$.pipe(
+  profile$ = this.username$.pipe(
     filter(username => username !== ''),
-    flatMap(username =>
-      forkJoin({
-        profile: this.fetchProfile(username),
-        repos: this.fetchRepos(username)
-      })
-    )
+    switchMap(this.fetchProfile)
+  )
+
+  repos$ = this.username$.pipe(
+    filter(username => username !== ''),
+    switchMap(this.fetchRepos)
   )
 }
 

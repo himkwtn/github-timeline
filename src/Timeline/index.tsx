@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './Timeline.scss'
 import { service } from '../common/service'
 import Container from './Container'
-import { GithubRepository } from '../common/types'
+import { useObservable } from '../utils/hooks'
 const Timeline = () => {
-  const [repos, setRepos] = useState<GithubRepository[]>([])
-  useEffect(() => {
-    const subscription = service.data$.subscribe(({ repos }) => {
-      setRepos(repos)
-    })
-    return () => subscription.unsubscribe()
-  }, [])
+  const repos = useObservable(service.repos$, [])
   return (
     <div className="bg">
       <div className="timeline">

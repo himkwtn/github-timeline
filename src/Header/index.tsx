@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { GithubProfile } from '../common/types'
+import React from 'react'
 import { service } from '../common/service'
 import SearchBar from './SearchBar'
 import Profile from './Profile'
 import SearchResultList from './SearchResultList'
+import { useObservable } from '../utils/hooks'
 
 const Header = () => {
-  const [profile, setProfile] = useState<GithubProfile>()
-  useEffect(() => {
-    const subscription = service.data$.subscribe(({ profile }) => {
-      setProfile(profile)
-    })
-    return () => subscription.unsubscribe()
-  }, [])
+  const profile = useObservable(service.profile$)
   return (
     <div>
       <SearchResultList />
