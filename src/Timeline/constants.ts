@@ -11,7 +11,11 @@ export const ICON: Constant = Object.freeze({
   'C++': 'cplusplus',
   Python: 'python',
   Go: 'go',
-  PHP: 'php'
+  PHP: 'php',
+  Ruby: 'ruby',
+  CSS: 'css3',
+  HTML: 'html5',
+  Swift: 'swift'
 })
 
 export const COLOR: Constant = Object.freeze({

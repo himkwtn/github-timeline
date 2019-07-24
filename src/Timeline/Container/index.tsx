@@ -28,8 +28,9 @@ const Container = ({
             <h2 className="font-bold text-xl">{name}</h2>
           </a>
           <p className="text-base">{description}</p>
+          <hr className="h-px bg-gray-500" />
           <div
-            className="flex items-center text-sm"
+            className="flex items-center text-sm text-gray-600"
             style={{ justifyContent: 'space-between' }}
           >
             <Language language={language} />

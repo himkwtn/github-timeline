@@ -16,7 +16,7 @@ const Language = ({ language }: { language: string }) => {
         className="h-5 w-5 rounded-full mr-4"
         style={{ backgroundColor: iconColor }}
       >
-        <i className={icon} style={{ fontSize: '20px', fill: color }} />
+        <i className={icon} style={{ fontSize: '20px', color }} />
       </div>
 
       <span style={{ paddingRight: '20px' }}>{language || 'N/A'}</span>
