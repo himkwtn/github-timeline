@@ -11,7 +11,11 @@ const Result = ({ username, avatar }: SearchResult) => {
       onClick={handleClick}
       className="flex flex-wrap items-center m-2 rounded-full w-auto bg-gray-200 hover:bg-gray-300 focus:outline-none focus:bg-gray-400"
     >
-      <Img src={avatar} className="rounded-full w-12 h-12 mr-2" />
+      <Img
+        src={avatar}
+        className="rounded-full w-12 h-12 mr-2"
+        loader={<div className="bg-gray-400 w-12 h-12 mr-2 rounded-full" />}
+      />
       <p className="mr-4 text-lg">{username}</p>
     </button>
   )
